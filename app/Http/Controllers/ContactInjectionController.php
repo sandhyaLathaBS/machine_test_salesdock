@@ -19,7 +19,6 @@ class ContactInjectionController extends Controller
 
     public function injectData(Request $request){
         try {
-            // dd($request->all(), $request->lead_id);
             if($request->lead_id || $request->customer_id) {
                 if($request->lead_id) {
                     $leadData = Lead::find($request->lead_id);
@@ -27,9 +26,7 @@ class ContactInjectionController extends Controller
                         return response()->json(['error' => 'Lead not found'], 404);
                     } else {
                         $leadData = $leadData->toArray();
-                        // dd($leadData,$leadData['first_name']);
                         $data = new ContactDTO($leadData['first_name'], $leadData['last_name'], $leadData['postal_code']); 
-                        // dd( $data);
                         $this->mainInjectionService->injectData($data, 'lead');
         
                         return response()->json(['message' => 'Lead data injected into contacts table']);
@@ -37,7 +34,6 @@ class ContactInjectionController extends Controller
                 }
                 if($request->customer_id) {
                     $customerData = Customer::find($request->customer_id)->toArray();
-                    // dd($customerData);
                     if (!$customerData) {
                         return response()->json(['error' => 'Customer not found'], 404);
                     }

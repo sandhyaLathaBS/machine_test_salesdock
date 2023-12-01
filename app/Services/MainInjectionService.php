@@ -14,7 +14,6 @@ class MainInjectionService
 
     public function injectData(ContactDTO $contactDTO, string $type)
     {
-        // dd($contactDTO, $type);
         if (isset($this->injectionServices[$type])) {
             $this->injectionServices[$type]->inject($contactDTO);
         }
